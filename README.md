@@ -1,211 +1,205 @@
-# Template Harvester
+# 🤖 Template Harvester Dashboard
 
-A comprehensive data analysis dashboard for exploring **15,011 automation templates** from Zapier, Make.com, and n8n.
+Interactive dashboard for analyzing **15,011 automation templates** from Make.com, n8n, and Zapier.
 
-## 🚀 Live Dashboard
-
-**Deploy to Streamlit Cloud** for free hosting - see [Deployment](#deployment) section below.
-
-## 📊 Dashboard Features
-
-- **15,011 Templates** across 3 platforms (Make: 53.4%, n8n: 43.5%, Zapier: 3.1%)
-- **73 Enriched Columns** including AI detection, complexity scoring, popularity metrics
-- **6 Interactive Tabs**: Overview, Explorer, Analytics, AI Insights, App Analysis, Comparison
-- **Real-time Filtering** by platform, automation type, complexity, AI features
-- **Interactive Visualizations** powered by Plotly
-- **CSV Export** functionality
-
-### Dashboard Insights
-- 62% AI-powered templates (9,303)
-- 55.7% beginner-friendly (8,368)
-- Top apps: HTTP Request, Code, AI Agent, Google Sheets
-
-## 🎯 Quick Start - Dashboard
-
-### Prerequisites
-
-**Important:** The enriched CSV file (50MB) is not included in the repository. You need to generate it first:
-
-```bash
-# 1. Scrape templates from all platforms (optional - or use existing CSVs)
-python scrape_make_production.py
-python scrape_n8n_production.py
-python scrape_zapier_production.py
-
-# 2. Create unified CSV
-python create_unified_csv.py
-
-# 3. Enrich the unified CSV with 43 additional columns
-python enrich_unified_csv.py
-```
-
-This will generate `exports/unified_templates_enriched_YYYYMMDD_HHMMSS.csv` with 15,011+ templates.
-
-### Installation
-
-```bash
-# Install dashboard dependencies
-pip install -r requirements_dashboard.txt
-```
-
-### Run Locally
-
-```bash
-streamlit run dashboard.py
-```
-
-Dashboard opens at `http://localhost:8501`
-
-### Documentation
-- [Dashboard Quick Start Guide](DASHBOARD_QUICKSTART.md)
-- [Dashboard README](DASHBOARD_README.md)
-- [Enrichment README](ENRICHMENT_README.md)
-
-## 🌐 Deployment
-
-### Deploy to Streamlit Community Cloud (Free)
-
-**Repository:** https://github.com/harshit-codes/Template-Harvester
-
-#### Step-by-Step Deployment:
-
-1. **Fork the Repository** (optional) or use the main repo
-2. **Go to [share.streamlit.io](https://share.streamlit.io)**
-3. **Sign in with GitHub**
-4. **Click "New app"**
-5. **Select:**
-   - Repository: `harshit-codes/Template-Harvester` (or your fork)
-   - Branch: `master`
-   - Main file path: `dashboard.py`
-6. **Click "Advanced settings"** and add:
-   - Python version: `3.10` or higher
-7. **Click "Deploy"**
-
-#### Important: Data Setup for Cloud Deployment
-
-Since the CSV file (50MB) is not in the repository, you have 3 options:
-
-**Option 1: Upload CSV via GitHub (Recommended for testing)**
-- Generate the CSV locally using the steps above
-- Create a new branch
-- Temporarily add the CSV: `git add -f exports/unified_templates_enriched_*.csv`
-- Commit and push to your fork
-- Deploy from that branch
-
-**Option 2: Use Git LFS**
-- Install Git LFS: `git lfs install`
-- Track CSV files: `git lfs track "exports/*.csv"`
-- Add and commit the CSV
-- Push to GitHub (Git LFS will handle large files)
-
-**Option 3: Generate CSV on Streamlit Cloud**
-- Fork the repo
-- Add a startup script that runs the enrichment process
-- Note: This will take ~5-10 minutes on first deploy
-
-Your dashboard will be live at `https://your-app-name.streamlit.app`
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=harshit-codes/Template-Harvester&branch=master&mainModule=dashboard.py)
 
 ---
 
-## Template Scraper
+## 🚀 Quick Deploy
 
-Template Harvester is also a Python application designed to extract and consolidate automation templates from n8n, Make.com, and Zapier APIs into a unified CSV file.
+**Deploy to Streamlit Cloud in one click:**
 
-## Features
+👉 **[Deploy Now](https://share.streamlit.io/deploy?repository=harshit-codes/Template-Harvester&branch=master&mainModule=dashboard.py)**
 
-- Fetches templates from n8n and Make.com.
-- Normalizes disparate API responses into a unified CSV schema.
-- Handles pagination and API rate limits.
-- Exports data to a single, standardized CSV file.
-- Configurable via `config.json`.
+---
 
-## Setup
+## 📊 Dashboard Features
 
-1.  **Clone the repository (if applicable) or navigate to the project directory.**
+### 6 Interactive Tabs:
 
-2.  **Install dependencies:**
+1. **📈 Overview** - Key metrics and distribution charts
+   - Platform breakdown
+   - Complexity levels
+   - Technology adoption
+   - Popular apps and integrations
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+2. **🔍 Explorer** - Advanced search and filtering
+   - Real-time search across 15K templates
+   - Multi-dimensional filters
+   - Detailed template view
+   - Export filtered results
 
-3.  **Configure API Keys and Settings:**
+3. **📊 Analytics** - Correlation and engagement analysis
+   - App usage patterns
+   - Complexity vs popularity
+   - Platform comparisons
 
-    Edit the `config.json` file in the root directory. You will need to provide your API keys/client IDs for Make.com and Zapier.
+4. **🤖 AI Insights** - AI/ML adoption analysis
+   - AI use case breakdown
+   - Provider distribution
+   - AI-powered template trends
 
-    ```json
-    {
-      "platforms": {
-        "n8n": {
-          "enabled": true,
-          "base_url": "https://api.n8n.io",
-          "max_pages": 10,
-          "rows_per_page": 100
-        },
-        "make": {
-          "enabled": true,
-          "base_url": "https://eu1.make.com",
-          "api_key": "YOUR_MAKE_API_KEY",
-          "max_pages": 10,
-          "limit": 100
-        }
-      },
-      "output": {
-        "format": "csv",
-        "filename_prefix": "templates",
-        "include_timestamp": true,
-        "directory": "./exports"
-      },
-      "logging": {
-        "level": "INFO",
-        "file": "./logs/scraper.log",
-        "console": true
-      }
-    }
-    ```
+5. **🔗 App Analysis** - Integration patterns
+   - Top apps by category
+   - Co-occurrence analysis
+   - Workflow patterns
 
-    *   Replace `"YOUR_MAKE_API_KEY"` with your actual Make.com API key.
+6. **⚖️ Comparison** - Side-by-side template comparison
+   - Compare up to 3 templates
+   - Feature comparison
+   - Metric analysis
 
-    **Note:** For Make.com, you typically obtain these credentials from your developer dashboard on their respective platforms.
+---
 
-## Running the Scraper
+## 📈 Dataset
 
-Execute the `main.py` script from the `template_harvester` directory:
+- **Total Templates:** 15,011
+- **Platforms:** Make.com (53.4%), n8n (43.5%), Zapier (3.1%)
+- **Unique Apps:** 1,346
+- **AI-Powered:** 62% (9,303 templates)
+- **Categorization:** 64 columns including automation types, complexity, industry, tech flags
+
+---
+
+## 🛠️ Local Setup
+
+### Run Locally:
 
 ```bash
-python -m template_harvester.main
+# Clone repository
+git clone https://github.com/harshit-codes/Template-Harvester.git
+cd Template-Harvester
+
+# Install dependencies
+pip install -r requirements_dashboard.txt
+
+# Run dashboard
+streamlit run dashboard.py
 ```
 
-## Output
+Dashboard will open at `http://localhost:8501`
 
-The generated CSV file(s) will be saved in the `./exports` directory (or the directory specified in `config.json`). Log files will be saved in `./logs`.
+---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
-.  
-├── config.json  
-├── requirements.txt  
-└── template_harvester/  
-    ├── __init__.py  
-    ├── main.py  
-    ├── config.py  
-    ├── scrapers/  
-    │   ├── __init__.py  
-    │   ├── base_scraper.py  
-    │   ├── n8n_scraper.py  
-    │   ├── make_scraper.py  
-    │   └── zapier_scraper.py  
-    ├── normalizers/  
-    │   ├── __init__.py  
-    │   ├── base_normalizer.py  
-    │   ├── n8n_normalizer.py  
-    │   ├── make_normalizer.py  
-    │   └── zapier_normalizer.py  
-    ├── exporters/  
-    │   ├── __init__.py  
-    │   └── csv_exporter.py  
-    └── utils/  
-        ├── __init__.py  
-        └── logging_setup.py  
+Template-Harvester/
+├── dashboard.py                          # Main Streamlit dashboard
+├── requirements_dashboard.txt            # Python dependencies
+├── exports/
+│   └── unified_templates_lite_*.csv     # Optimized dataset (31 MB)
+├── DASHBOARD_README.md                   # Detailed dashboard docs
+├── DASHBOARD_QUICKSTART.md               # Quick start guide
+└── STREAMLIT_DEPLOYMENT.md               # Deployment guide
 ```
+
+---
+
+## 🎯 Use Cases
+
+- **Market Research:** Analyze automation trends and popular integrations
+- **Template Discovery:** Find templates by automation type, complexity, or technology
+- **Competitive Analysis:** Compare platforms and understand ecosystem differences
+- **Data Science:** Export filtered datasets for further analysis
+- **AI/ML Insights:** Understand AI adoption in workflow automation
+
+---
+
+## 🔧 Tech Stack
+
+- **Frontend:** Streamlit 1.28+
+- **Visualization:** Plotly 5.17+
+- **Data:** Pandas 2.0+
+- **Python:** 3.9+
+
+---
+
+## 📊 Categorization
+
+Each template is categorized across multiple dimensions:
+
+### Primary Categories:
+- **Automation Type:** AI_AUTOMATION, INTEGRATION, MARKETING, COMMUNICATION, etc.
+- **Complexity Level:** BEGINNER, INTERMEDIATE, ADVANCED, EXPERT
+- **Industry:** IT, SALES, MARKETING, HR, ECOMMERCE, etc.
+- **Integration Pattern:** SIMPLE_WORKFLOW, MULTI_STEP, HUB_AND_SPOKE, etc.
+- **Popularity Tier:** VIRAL, POPULAR, MODERATE, NICHE
+
+### Technology Flags:
+- AI-powered, Webhook-based, Scheduled, Real-time
+- Uses spreadsheet, email, CRM, communication tools
+- Requires coding, API keys
+
+---
+
+## 🌟 Key Insights
+
+### Top Apps (All Platforms):
+1. **HTTP Request** - 3,088 templates (20.6%)
+2. **Code** - 2,761 templates (18.4%)
+3. **AI Agent** - 2,031 templates (13.5%)
+4. **Google Sheets** - 1,807 templates (12.0%)
+5. **OpenAI Chat Model** - 1,530 templates (10.2%)
+
+### Top Use Cases:
+1. Form Processing (6,725 templates)
+2. File Management (3,603 templates)
+3. Content Creation (2,513 templates)
+4. Customer Support (1,909 templates)
+
+### Complexity Distribution:
+- Beginner: 55.7%
+- Intermediate: 21.2%
+- Advanced: 12.1%
+- Expert: 11.0%
+
+---
+
+## 📝 Documentation
+
+- **[Dashboard Quick Start](DASHBOARD_QUICKSTART.md)** - Get started in 5 minutes
+- **[Deployment Guide](STREAMLIT_DEPLOYMENT.md)** - Deploy to Streamlit Cloud
+- **[Categorization Analysis](CATEGORIZATION_ANALYSIS_20251028_142728.md)** - Detailed analysis report
+
+---
+
+## 🤝 Contributing
+
+This project harvests public template data from automation platforms. To update the dataset:
+
+1. Run scrapers for latest templates
+2. Run enrichment script to add categorization
+3. Create lite version for deployment
+4. Push to GitHub (auto-deploys to Streamlit)
+
+---
+
+## 📄 License
+
+This project analyzes publicly available template data. All trademarks and template content belong to their respective owners (Make.com, n8n, Zapier).
+
+---
+
+## 🙏 Acknowledgments
+
+Data sourced from:
+- **Make.com** - Visual workflow automation platform
+- **n8n** - Open-source workflow automation
+- **Zapier** - No-code automation platform
+
+---
+
+## 📧 Contact
+
+Created with Claude Code - https://claude.ai/code
+
+For issues or questions, please open a GitHub issue.
+
+---
+
+**Last Updated:** October 28, 2025
+**Dataset Version:** 20251028
+**Templates:** 15,011
+**Status:** ✅ Production Ready
