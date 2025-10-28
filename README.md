@@ -22,6 +22,25 @@ A comprehensive data analysis dashboard for exploring **15,011 automation templa
 
 ## 🎯 Quick Start - Dashboard
 
+### Prerequisites
+
+**Important:** The enriched CSV file (50MB) is not included in the repository. You need to generate it first:
+
+```bash
+# 1. Scrape templates from all platforms (optional - or use existing CSVs)
+python scrape_make_production.py
+python scrape_n8n_production.py
+python scrape_zapier_production.py
+
+# 2. Create unified CSV
+python create_unified_csv.py
+
+# 3. Enrich the unified CSV with 43 additional columns
+python enrich_unified_csv.py
+```
+
+This will generate `exports/unified_templates_enriched_YYYYMMDD_HHMMSS.csv` with 15,011+ templates.
+
 ### Installation
 
 ```bash
@@ -46,21 +65,45 @@ Dashboard opens at `http://localhost:8501`
 
 ### Deploy to Streamlit Community Cloud (Free)
 
-1. **Push to GitHub** (see instructions below)
+**Repository:** https://github.com/harshit-codes/Template-Harvester
+
+#### Step-by-Step Deployment:
+
+1. **Fork the Repository** (optional) or use the main repo
 2. **Go to [share.streamlit.io](https://share.streamlit.io)**
 3. **Sign in with GitHub**
 4. **Click "New app"**
 5. **Select:**
-   - Repository: `your-username/Template-Harvester`
-   - Branch: `main` or `master`
+   - Repository: `harshit-codes/Template-Harvester` (or your fork)
+   - Branch: `master`
    - Main file path: `dashboard.py`
-6. **Click "Deploy"**
+6. **Click "Advanced settings"** and add:
+   - Python version: `3.10` or higher
+7. **Click "Deploy"**
+
+#### Important: Data Setup for Cloud Deployment
+
+Since the CSV file (50MB) is not in the repository, you have 3 options:
+
+**Option 1: Upload CSV via GitHub (Recommended for testing)**
+- Generate the CSV locally using the steps above
+- Create a new branch
+- Temporarily add the CSV: `git add -f exports/unified_templates_enriched_*.csv`
+- Commit and push to your fork
+- Deploy from that branch
+
+**Option 2: Use Git LFS**
+- Install Git LFS: `git lfs install`
+- Track CSV files: `git lfs track "exports/*.csv"`
+- Add and commit the CSV
+- Push to GitHub (Git LFS will handle large files)
+
+**Option 3: Generate CSV on Streamlit Cloud**
+- Fork the repo
+- Add a startup script that runs the enrichment process
+- Note: This will take ~5-10 minutes on first deploy
 
 Your dashboard will be live at `https://your-app-name.streamlit.app`
-
-**Note:** Since CSV files are large and excluded from git, you'll need to either:
-- Upload a sample CSV to the repo, or
-- Generate the enriched CSV on first run
 
 ---
 
