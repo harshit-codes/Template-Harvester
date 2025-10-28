@@ -1,3 +1,8 @@
+# Sensitive files
+.env
+config.json
+*.env
+
 # Python
 __pycache__/
 *.py[cod]
@@ -23,13 +28,6 @@ wheels/
 .installed.cfg
 *.egg
 
-# Large CSV files (too large for GitHub, generate locally or use Git LFS)
-exports/*.csv
-
-# Logs
-logs/
-*.log
-
 # IDE
 .vscode/
 .idea/
@@ -41,5 +39,32 @@ logs/
 .DS_Store
 Thumbs.db
 
-# Streamlit
-.streamlit/secrets.toml
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# Test files (exclude from deployment)
+test_*.py
+validate_*.py
+scrape_zapier_*.py
+
+# Analysis reports (optional - include if you want them in repo)
+# CATEGORIZATION_ANALYSIS_*.md
+# VALIDATION_REPORT.md
+
+# Keep only lite version for deployment
+exports/unified_templates_enriched_*.csv
+exports/zapier_templates_*.csv
+exports/make_templates_*.csv
+exports/n8n_templates_*.csv
+
+# Template harvester source (not needed for dashboard deployment)
+template_harvester/
+
+# PRD and development docs (optional)
+template-scraper-prd.md

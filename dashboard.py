@@ -58,15 +58,26 @@ st.markdown("""
 @st.cache_data
 def load_data():
     """Load enriched CSV data"""
-    # Find latest enriched CSV
+    # First try to find sanitized lite version (optimized for Streamlit)
+    sanitized_files = glob.glob('./exports/unified_templates_lite_*_sanitized.csv')
+    lite_files = glob.glob('./exports/unified_templates_lite_*.csv')
     enriched_files = glob.glob('./exports/unified_templates_enriched_*.csv')
-    if not enriched_files:
+
+    if sanitized_files:
+        latest_file = max(sanitized_files)
+        file_type = "lite (sanitized)"
+    elif lite_files:
+        latest_file = max(lite_files)
+        file_type = "lite"
+    elif enriched_files:
+        latest_file = max(enriched_files)
+        file_type = "enriched"
+    else:
         st.error("No enriched CSV files found! Please run enrich_unified_csv.py first.")
         st.stop()
 
-    latest_file = max(enriched_files)
-
     # Load data
+    st.info(f"📁 Loading {file_type} version: {os.path.basename(latest_file)}")
     df = pd.read_csv(latest_file, low_memory=False)
 
     # Convert boolean columns
